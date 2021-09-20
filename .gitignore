@@ -7,6 +7,7 @@ federation/node_modules/
 
 # BACK END
 backend/pizza/pizza/__pycache__/
+backend/pizza/db.sqlite3
 
 # Other
 /venv/
