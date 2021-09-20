@@ -1,9 +1,13 @@
-$ FRON END
+# FRON END
 # dependencies
 frontend/app/node_modules/
 
 # Dependency directories federation
 federation/node_modules/
 
+# BACK END
+backend/pizza/pizza/__pycache__/
+
 # Other
 /venv/
+.vscode/
