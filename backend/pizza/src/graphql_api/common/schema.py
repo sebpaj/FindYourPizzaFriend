@@ -6,8 +6,10 @@ from .types import CategoryType, PizzaType
 
 
 class CommonQuery(graphene.ObjectType):
-    pizza = relay.Node.Field(PizzaType)
-
     all_categories = DjangoConnectionField(CategoryType)
+    
+    pizza = relay.Node.Field(PizzaType)
+    all_pizzas = DjangoConnectionField(PizzaType)
+
     
 

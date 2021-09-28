@@ -1,2 +1,5 @@
+from common.models import Pizza
+
 def resolve_users_with_same_pizza(root, info):
-    print(root)
+    ingredients = root.ingredients.all().values_list("pk", flat=True)
+    
