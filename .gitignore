@@ -10,6 +10,7 @@ backend/pizza/pizza/__pycache__/
 
 # Other
 /venv/
+*.idea
 */__pycache__/
 .vscode/
 *.pyc

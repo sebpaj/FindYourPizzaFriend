@@ -24,12 +24,36 @@
     }
   },
   {
+    "model": "common.pizza",
+    "pk": 4,
+    "fields": {
+        "name": "cheese and salami",
+        "user": "test_user_4"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 5,
+    "fields": {
+        "name": "salami with cheese",
+        "user": "test_user_5"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 6,
+    "fields": {
+        "name": "capriciosa",
+        "user": "test_user_6"
+    }
+  },
+  {
     "model": "common.ingredient",
     "pk": 100,
     "fields": {
         "name": "magic cheese",
         "category": 1,
-        "pizza": [1, 2]
+        "pizza": [1, 2, 4, 5, 6]
     }
   },
   {
@@ -38,7 +62,7 @@
     "fields": {
         "name": "magic salami",
         "category": 2,
-        "pizza": [2]
+        "pizza": [3, 4, 5]
     }
   }
 ]

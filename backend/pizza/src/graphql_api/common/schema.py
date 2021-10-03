@@ -13,3 +13,4 @@ class CommonQuery(graphene.ObjectType):
 
     
 
+#TODO implrement resolver

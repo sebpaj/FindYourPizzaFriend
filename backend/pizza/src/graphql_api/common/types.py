@@ -5,6 +5,7 @@ from graphene_django.types import DjangoObjectType
 from common.models import Category, Ingredient, Pizza
 
 from .resolvers import resolve_users_with_same_pizza
+from .custom_types import UserWithSamePizzaType
 
 
 class CategoryType(DjangoObjectType):
@@ -24,4 +25,4 @@ class PizzaType(DjangoObjectType):
         model = Pizza
         interfaces = (relay.Node,)
 
-    users_with_same_pizza = graphene.List(graphene.String, resolver=resolve_users_with_same_pizza)
+    users_with_same_pizza = graphene.List(UserWithSamePizzaType, resolver=resolve_users_with_same_pizza)

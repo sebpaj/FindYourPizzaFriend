@@ -2,6 +2,7 @@ import json
 
 from graphene_django.utils.testing import GraphQLTestCase
 
+
 class MyFancyTestCase(GraphQLTestCase):
     def test_some_query(self):
         response = self.query(
