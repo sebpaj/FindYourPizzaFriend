@@ -1,0 +1,107 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.2"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1", for: EXECUTION)
+{
+  query: Query
+}
+
+directive @core(as: String, feature: String!, for: core__Purpose) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, provides: join__FieldSet, requires: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
+
+type CategoryType implements Node {
+  id: ID!
+  ingredients(after: String, before: String, first: Int, last: Int, offset: Int): IngredientTypeConnection!
+  name: String!
+}
+
+type CategoryTypeConnection {
+  edges: [CategoryTypeEdge]!
+  pageInfo: PageInfo!
+}
+
+type CategoryTypeEdge {
+  cursor: String!
+  node: CategoryType
+}
+
+type IngredientType implements Node {
+  category: CategoryType!
+  id: ID!
+  name: String!
+  pizza(after: String, before: String, first: Int, last: Int, offset: Int): PizzaTypeConnection!
+}
+
+type IngredientTypeConnection {
+  edges: [IngredientTypeEdge]!
+  pageInfo: PageInfo!
+}
+
+type IngredientTypeEdge {
+  cursor: String!
+  node: IngredientType
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type PizzaType implements Node {
+  id: ID!
+  ingredients(after: String, before: String, first: Int, last: Int, offset: Int): IngredientTypeConnection!
+  name: String!
+  user: String!
+  usersWithSamePizza: [UserWithSamePizzaType]
+}
+
+type PizzaTypeConnection {
+  edges: [PizzaTypeEdge]!
+  pageInfo: PageInfo!
+}
+
+type PizzaTypeEdge {
+  cursor: String!
+  node: PizzaType
+}
+
+type Query {
+  allCategories(after: String, before: String, first: Int, last: Int, offset: Int): CategoryTypeConnection @join__field(graph: PIZZA)
+  allPizzas(after: String, before: String, first: Int, last: Int, offset: Int): PizzaTypeConnection @join__field(graph: PIZZA)
+  pizza(id: ID!): PizzaType @join__field(graph: PIZZA)
+}
+
+type UserWithSamePizzaType {
+  id: String!
+  pizza: String!
+}
+
+enum core__Purpose {
+  """
+  `EXECUTION` features provide metadata necessary to for operation execution.
+  """
+  EXECUTION
+
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  PIZZA @join__graph(name: "pizza" url: "http://localhost:8000/")
+}

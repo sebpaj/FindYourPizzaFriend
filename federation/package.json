@@ -1,7 +1,6 @@
 {
   "name": "federation",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +9,8 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/gateway": "^0.41.0",
-    "apollo-server": "^3.3.0",
-    "graphql": "^15.5.3"
-  }
+    "apollo-server": "^3.4.0",
+    "graphql": "^15.6.1"
+  },
+  "description": ""
 }
