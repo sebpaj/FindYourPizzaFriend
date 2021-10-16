@@ -5,13 +5,13 @@ import Container from "@mui/material/Container";
 
 import Login from "./log-in";
 import Logout from "./log-out";
+
 import WelcomeScreen from "./welcome-screen";
 import CreatePizza from "./create-pizza";
 
 const useStyles = makeStyles({
   root: {
     textAlign: "center",
-    color: "lightblue",
   },
 });
 

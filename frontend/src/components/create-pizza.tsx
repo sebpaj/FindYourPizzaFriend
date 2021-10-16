@@ -19,8 +19,32 @@ export default function CreatePizza(): JSX.Element {
       alignItems="center"
       justifyContent="center"
     >
-      <Button variant="contained">Create Pizza</Button>
-      <Button variant="contained">Find Your Pizza Friends!:)</Button>
+      <Button
+        variant="contained"
+        style={{
+          border: "2px solid #363b4a",
+          backgroundColor: "#0f1d45",
+          color: "#078af5",
+          padding: "3px 18px",
+          fontSize: "18px",
+        }}
+        onClick={() => console.log("clicked create button")}
+      >
+        Create Pizza
+      </Button>
+      <Button
+        variant="contained"
+        style={{
+          border: "2px solid #363b4a",
+          backgroundColor: "#0f1d45",
+          color: "#078af5",
+          padding: "3px 18px",
+          fontSize: "18px",
+        }}
+        onClick={() => console.log("clicked find button")}
+      >
+        Find Your Pizza Friends!:)
+      </Button>
     </Stack>
   );
 }

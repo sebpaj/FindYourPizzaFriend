@@ -15,6 +15,10 @@ const useStyles = makeStyles({
     textAlign: "center",
     padding: "10px 50px",
   },
+  item: {
+    color: "#078af5",
+    padding: "10px",
+  },
 });
 
 export default function WelcomeScreen(props: WelcomeScreenProps): JSX.Element {
@@ -34,15 +38,30 @@ export default function WelcomeScreen(props: WelcomeScreenProps): JSX.Element {
           justifyContent="center"
           className={classes.root}
         >
-          <Grid item xs={2} style={{ padding: "10px" }}>
+          <Grid item xs={2} className={classes.item}>
             Welcome {name}
           </Grid>
-          <Grid item xs={2} style={{ padding: "10px" }}>
+          <Grid item xs={2} className={classes.item}>
             <img src={imageUrl} alt="new" />
           </Grid>
         </Grid>
       </Box>
     );
   }
-  return <p>Welcome stranger. Please log in.</p>;
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        className={classes.root}
+      >
+        <Grid item xs={2} className={classes.item}>
+          Welcome stranger. Please log in.
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }
