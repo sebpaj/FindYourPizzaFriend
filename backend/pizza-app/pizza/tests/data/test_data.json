@@ -1,0 +1,86 @@
+[
+  {
+    "model": "common.pizza",
+    "pk": 1,
+    "fields": {
+      "name": "Capriciosa",
+      "user": "test_user_1"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 2,
+    "fields": {
+      "name": "Ham and mushrooms",
+      "user": "test_user_2"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 3,
+    "fields": {
+      "name": "Pepperoni",
+      "user": "test_user_3"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 4,
+    "fields": {
+      "name": "Cheese and salami",
+      "user": "test_user_4"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 5,
+    "fields": {
+      "name": "Salami with cheese",
+      "user": "test_user_5"
+    }
+  },
+  {
+    "model": "common.pizza",
+    "pk": 6,
+    "fields": {
+      "name": "Capriciosa",
+      "user": "test_user_6"
+    }
+  },
+  {
+    "model": "common.ingredient",
+    "pk": 100,
+    "fields": {
+      "name": "Magic cheese",
+      "category": 1,
+      "pizza": [1, 2, 4, 5, 6]
+    }
+  },
+  {
+    "model": "common.ingredient",
+    "pk": 101,
+    "fields": {
+      "name": "Magic salami",
+      "category": 2,
+      "pizza": [3, 4, 5]
+    }
+  },
+  {
+    "model": "common.ingredient",
+    "pk": 102,
+    "fields": {
+      "name": "Magic mushrooms",
+      "category": 5,
+      "pizza": [1, 2, 6]
+    }
+  },
+  {
+    "model": "common.ingredient",
+    "pk": 103,
+    "fields": {
+      "name": "Magic ham",
+      "category": 2,
+      "pizza": [1, 2, 6]
+    }
+  }
+]
