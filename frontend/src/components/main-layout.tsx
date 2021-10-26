@@ -8,6 +8,7 @@ import Logout from "./log-out";
 
 import WelcomeScreen from "./welcome-screen";
 import CreatePizza from "./create-pizza";
+import UserPizzas from "./user-pizzas";
 
 const useStyles = makeStyles({
   root: {
@@ -42,16 +43,18 @@ export default function MainLayout(): JSX.Element {
               setImageUrl={setImageUrl}
             />
           ) : (
-            [
+            <React.Fragment>
               <Logout
                 setIsLoggedIn={setIsLoggedIn}
                 setToken={setToken}
                 setName={setName}
                 setEmail={setEmail}
                 setImageUrl={setImageUrl}
-              />,
+              />
+              ,
               <CreatePizza />,
-            ]
+              <UserPizzas />
+            </React.Fragment>
           )}
         </Box>
       </Container>
