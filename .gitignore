@@ -16,3 +16,4 @@ backend/pizza/pizza/__pycache__/
 .vscode/
 *.pyc
 *.sqlite3
+node_modules

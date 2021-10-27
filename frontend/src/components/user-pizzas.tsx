@@ -1,13 +1,13 @@
 import React from "react";
+import { styled } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles({
   root: {
@@ -22,8 +22,24 @@ const useStyles = makeStyles({
   },
   table: {
     width: "100%",
+    border: "2px solid #363b4a",
+    backgroundColor: "#00001a",
+    color: "#078af5",
   },
 });
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontSize: 14,
+    backgroundColor: theme.palette.common.black,
+    color: "#078af5",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+    backgroundColor: theme.palette.common.black,
+    color: "#078af5",
+  },
+}));
 
 export default function UserPizzas(): JSX.Element {
   const classes = useStyles();
@@ -33,25 +49,12 @@ export default function UserPizzas(): JSX.Element {
   ];
   return (
     <React.Fragment>
-      <Typography
-        variant="h6"
-        gutterBottom
-        component="div"
-        sx={{ pl: 30 }}
-        className={classes.typography}
-      >
-        Your Pizzas
-      </Typography>
-
-      <TableContainer
-        component={Paper}
-        sx={{ width: 700, position: "absolute", top: "50%", left: "23.5%" }}
-      >
+      <TableContainer component={Paper} className={classes.table}>
         <Table sx={{ minWidth: 350 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Pizza</TableCell>
-              <TableCell align="center">Ingredients</TableCell>
+              <StyledTableCell>Pizza</StyledTableCell>
+              <StyledTableCell align="center">Ingredients</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -60,10 +63,10 @@ export default function UserPizzas(): JSX.Element {
                 key={row[0]}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row">
                   {row[0]}
-                </TableCell>
-                <TableCell align="center">{row[1]}</TableCell>
+                </StyledTableCell>
+                <StyledTableCell align="center">{row[1]}</StyledTableCell>
               </TableRow>
             ))}
           </TableBody>

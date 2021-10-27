@@ -8,7 +8,7 @@ import Logout from "./log-out";
 
 import WelcomeScreen from "./welcome-screen";
 import CreatePizza from "./create-pizza";
-import UserPizzas from "./user-pizzas";
+import UserPizzasAccordion from "./user-pizzas-accordion";
 
 const useStyles = makeStyles({
   root: {
@@ -53,7 +53,7 @@ export default function MainLayout(): JSX.Element {
               />
               ,
               <CreatePizza />,
-              <UserPizzas />
+              <UserPizzasAccordion />
             </React.Fragment>
           )}
         </Box>
