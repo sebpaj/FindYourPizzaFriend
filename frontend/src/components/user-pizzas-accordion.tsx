@@ -1,4 +1,5 @@
 import React from "react";
+import { gql, useQuery } from "@apollo/client";
 import { makeStyles } from "@mui/styles";
 import { withStyles } from "@mui/styles";
 import Accordion from "@mui/material/Accordion";
@@ -8,6 +9,24 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import UserPizzas from "./user-pizzas";
 
+const GET_PIZZAS = gql`
+  query Pizzas {
+    allPizzas {
+      edges {
+        node {
+          name
+          ingredients {
+            edges {
+              node {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 const useStyles = makeStyles({
   root: {
     textAlign: "center",
@@ -47,6 +66,10 @@ const StyledAccordionSummary = withStyles({
 
 export default function UserPizzasAccordion(): JSX.Element {
   const classes = useStyles();
+  //   const { loading, error, data } = useQuery(GET_PIZZAS, {});
+  //   console.log(loading, error, data);
+
+  //   if (loading) return <p>Loading ...</p>;
   return (
     <div>
       <Accordion sx={{ backgroundColor: "#00001a", width: "800px" }}>
