@@ -12,6 +12,7 @@ class Category(models.Model):
 
 class Ingredient(models.Model):
     name = models.TextField(help_text="Ingredient of pizza", max_length=64)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='ingredients')
+    category = models.ForeignKey(
+        Category, on_delete=models.PROTECT, related_name="ingredients"
+    )
     pizza = models.ManyToManyField(Pizza, related_name="ingredients")
-

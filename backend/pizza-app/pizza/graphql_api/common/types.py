@@ -25,4 +25,6 @@ class PizzaType(DjangoObjectType):
         model = Pizza
         interfaces = (relay.Node,)
 
-    users_with_same_pizza = graphene.List(UserWithSamePizzaType, resolver=resolve_users_with_same_pizza)
+    users_with_same_pizza = graphene.List(
+        UserWithSamePizzaType, resolver=resolve_users_with_same_pizza
+    )

@@ -2,9 +2,10 @@ from graphene_federation import build_schema
 
 
 from .common.schema import CommonQuery
+from .users.schema import UsersQuery
 
 
-class Query(CommonQuery):
+class Query(CommonQuery, UsersQuery):
     pass
 
 
