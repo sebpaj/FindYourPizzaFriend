@@ -1,0 +1,158 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+"An object with an ID"
+interface Node {
+    "The ID of the object."
+    id: ID!
+}
+
+type CategoryType implements Node {
+    "The ID of the object."
+    id: ID!
+    ingredients(after: String, before: String, first: Int, last: Int, offset: Int): IngredientTypeConnection!
+    "Category of ingredient"
+    name: String!
+}
+
+type CategoryTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [CategoryTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+"A Relay edge containing a `CategoryType` and its cursor."
+type CategoryTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: CategoryType
+}
+
+type IngredientType implements Node {
+    category: CategoryType!
+    "The ID of the object."
+    id: ID!
+    "Ingredient of pizza"
+    name: String!
+    pizza(after: String, before: String, first: Int, last: Int, offset: Int): PizzaTypeConnection!
+}
+
+type IngredientTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [IngredientTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+"A Relay edge containing a `IngredientType` and its cursor."
+type IngredientTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: IngredientType
+}
+
+"The Relay compliant `PageInfo` type, containing data necessary to paginate this connection."
+type PageInfo {
+    "When paginating forwards, the cursor to continue."
+    endCursor: String
+    "When paginating forwards, are there more items?"
+    hasNextPage: Boolean!
+    "When paginating backwards, are there more items?"
+    hasPreviousPage: Boolean!
+    "When paginating backwards, the cursor to continue."
+    startCursor: String
+}
+
+type PizzaType implements Node {
+    "The ID of the object."
+    id: ID!
+    ingredients(after: String, before: String, first: Int, last: Int, offset: Int): IngredientTypeConnection!
+    "Custom pizza name"
+    name: String!
+    "Author of pizza"
+    user: String!
+    usersWithSamePizza: [UserWithSamePizzaType]
+}
+
+type PizzaTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [PizzaTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+"A Relay edge containing a `PizzaType` and its cursor."
+type PizzaTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: PizzaType
+}
+
+type Query {
+    _service: _Service
+    allCategories(after: String, before: String, first: Int, last: Int, offset: Int): CategoryTypeConnection
+    allPizzas(after: String, before: String, first: Int, last: Int, offset: Int): PizzaTypeConnection
+    category(
+        "The ID of the object"
+        id: ID!
+    ): CategoryType
+    pizza(
+        "The ID of the object"
+        id: ID!
+    ): PizzaType
+    users(after: String, before: String, email: String, email_Icontains: String, email_Istartswith: String, first: Int, last: Int, offset: Int): UserTypeConnection
+}
+
+type UserType implements Node {
+    admin: Boolean!
+    dateJoined: DateTime!
+    email: String!
+    firstName: String!
+    "The ID of the object."
+    id: ID!
+    imageUrl: String!
+    isActive: Boolean!
+    lastLogin: DateTime
+    lastName: String!
+    password: String!
+    staff: Boolean!
+}
+
+type UserTypeConnection {
+    "Contains the nodes in this connection."
+    edges: [UserTypeEdge]!
+    "Pagination data for this connection."
+    pageInfo: PageInfo!
+}
+
+"A Relay edge containing a `UserType` and its cursor."
+type UserTypeEdge {
+    "A cursor for use in pagination"
+    cursor: String!
+    "The item at the end of the edge"
+    node: UserType
+}
+
+type UserWithSamePizzaType {
+    id: String!
+    pizza: String!
+}
+
+type _Service {
+    sdl: String
+}
+
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime

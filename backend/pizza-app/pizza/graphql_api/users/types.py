@@ -6,5 +6,6 @@ from graphene_django.types import DjangoObjectType
 class UserType(DjangoObjectType):
     class Meta:
         model = get_user_model()
+        exclude = ("password",)
         filter_fields = {"email": ["exact", "icontains", "istartswith"]}
         interfaces = (relay.Node,)

@@ -17,8 +17,6 @@ class User(AbstractBaseUser):
     admin = models.BooleanField(default=False)  # a superuser
     date_joined = models.DateTimeField(default=timezone.now)
 
-    # notice the absence of a "Password field", that is built in.
-
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []  # Email & Password are required by default.
 
@@ -28,7 +26,7 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         # The user is identified by their email address
-        return self.email
+        return self.first_name
 
     def __str__(self):
         return self.email

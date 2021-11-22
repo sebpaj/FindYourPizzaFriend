@@ -6,3 +6,4 @@ from .types import UserType
 
 class UsersQuery(ObjectType):
     users = DjangoFilterConnectionField(UserType)
+
