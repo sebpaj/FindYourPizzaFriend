@@ -2,6 +2,7 @@
 
 schema {
     query: Query
+    mutation: Mutation
 }
 
 "An object with an ID"
@@ -55,6 +56,15 @@ type IngredientTypeEdge {
     cursor: String!
     "The item at the end of the edge"
     node: IngredientType
+}
+
+type LoginMutationPayload {
+    clientMutationId: String
+    success: Boolean!
+}
+
+type Mutation {
+    login(input: LoginMutationInput!): LoginMutationPayload
 }
 
 "The Relay compliant `PageInfo` type, containing data necessary to paginate this connection."
@@ -121,7 +131,6 @@ type UserType implements Node {
     isActive: Boolean!
     lastLogin: DateTime
     lastName: String!
-    password: String!
     staff: Boolean!
 }
 
@@ -147,6 +156,13 @@ type UserWithSamePizzaType {
 
 type _Service {
     sdl: String
+}
+
+input LoginMutationInput {
+    clientMutationId: String
+    email: String!
+    firstName: String!
+    imageUrl: String!
 }
 
 

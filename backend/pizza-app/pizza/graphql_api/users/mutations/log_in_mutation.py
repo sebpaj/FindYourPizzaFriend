@@ -1,7 +1,7 @@
 import graphene
 from graphene import relay
 
-from ....users.models import User
+from users.models import User
 
 
 class LoginMutation(relay.ClientIDMutation):
@@ -14,5 +14,8 @@ class LoginMutation(relay.ClientIDMutation):
 
     @classmethod
     def mutate_and_get_payload(cls, root, info, **input):
-        result = User.objects.create(**input)
+        print('here?')
+        # result = User.objects.create(**input)
         print('yup dones')
+
+        return LoginMutation(success=True)

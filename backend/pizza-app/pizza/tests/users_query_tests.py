@@ -22,7 +22,7 @@ USERS_QUERY = """
 """
 
 
-class CommonQueryTestCase(GraphQLTestCase):
+class UsersQueryTestCase(GraphQLTestCase):
     GRAPHQL_SCHEMA = schema
     GRAPHQL_URL = "/"
     fixtures = ("tests/data/test_data.json",)
