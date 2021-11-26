@@ -4,6 +4,7 @@ from django.db import models
 class Pizza(models.Model):
     name = models.TextField(help_text="Custom pizza name", max_length=64)
     user = models.TextField(help_text="Author of pizza", max_length=64)
+    #TODO: MIGRATE USER TO MODEL USER
 
 
 class Category(models.Model):

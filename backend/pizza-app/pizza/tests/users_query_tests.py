@@ -1,9 +1,6 @@
 import json
 
 from graphene_django.utils.testing import GraphQLTestCase
-from graphql_relay import to_global_id
-
-from users.models import User
 from graphql_api.api import schema
 
 USERS_QUERY = """

@@ -13,9 +13,8 @@ class LoginMutation(relay.ClientIDMutation):
     success = graphene.Boolean(required=True)
 
     @classmethod
-    def mutate_and_get_payload(cls, root, info, **input):
-        print('here?')
-        # result = User.objects.create(**input)
-        print('yup dones')
+    def mutate_and_get_payload(cls, _, __, **input):
+
+        User.objects.get_or_create(**input)
 
         return LoginMutation(success=True)
