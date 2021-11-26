@@ -21,8 +21,8 @@ class UsersMutationTestCase(GraphQLTestCase):
 
     def test_login_mutation_existing_user(self):
         # setup
-        first_name = "test_user"
-        email = "test_user@test.com"
+        first_name = "test_user_1"
+        email = "test_user_1@test.com"
         image_url = ""
 
         # execute
@@ -37,12 +37,12 @@ class UsersMutationTestCase(GraphQLTestCase):
         content = json.loads(response.content)
 
         self.assertEqual(content["data"]["login"]["success"], True)
-        self.assertEqual(User.objects.all().count(), 1)
+        self.assertEqual(User.objects.all().count(), 6)
 
     def test_login_mutation_new_user(self):
         # setup
-        first_name = "test_user_2"
-        email = "test_user_2@test.com"
+        first_name = "test_user_7"
+        email = "test_user_7@test.com"
         image_url = ""
 
         # execute
@@ -57,4 +57,4 @@ class UsersMutationTestCase(GraphQLTestCase):
         content = json.loads(response.content)
 
         self.assertEqual(content["data"]["login"]["success"], True)
-        self.assertEqual(User.objects.all().count(), 2)
+        self.assertEqual(User.objects.all().count(), 7)

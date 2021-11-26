@@ -35,9 +35,9 @@ class UsersQueryTestCase(GraphQLTestCase):
         content = json.loads(response.content)
         result = content["data"]["users"]["edges"]
 
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result[0]["node"]["firstName"], "test_user")
+        self.assertEqual(len(result), 6)
+        self.assertEqual(result[0]["node"]["firstName"], "test_user_1")
         self.assertEqual(result[0]["node"]["lastName"], "")
         self.assertEqual(result[0]["node"]["imageUrl"], "")
-        self.assertEqual(result[0]["node"]["email"], "test_user@test.com")
+        self.assertEqual(result[0]["node"]["email"], "test_user_1@test.com")
 

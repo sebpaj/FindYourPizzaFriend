@@ -1,10 +1,11 @@
 from django.db import models
 
+from users.models import User
+
 
 class Pizza(models.Model):
     name = models.TextField(help_text="Custom pizza name", max_length=64)
-    user = models.TextField(help_text="Author of pizza", max_length=64)
-    #TODO: MIGRATE USER TO MODEL USER
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pizzas")
 
 
 class Category(models.Model):

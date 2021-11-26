@@ -4,8 +4,9 @@ from graphene_django.types import DjangoObjectType
 
 from common.models import Category, Ingredient, Pizza
 
-from .resolvers import resolve_users_with_same_pizza
 from .custom_types import UserWithSamePizzaType
+from .resolvers import resolve_users_with_same_pizza
+from ..users.types import UserType
 
 
 class CategoryType(DjangoObjectType):

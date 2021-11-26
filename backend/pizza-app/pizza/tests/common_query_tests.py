@@ -5,7 +5,7 @@ from graphql_relay import to_global_id
 
 from common.models import Category, Pizza
 from graphql_api.api import schema
-
+from users.models import User
 
 ALL_CATEGORIES_QUERY = """
 query AllCategories{
@@ -53,7 +53,9 @@ PIZZA_QUERY = """
 query Pizza($id: ID!){
   pizza(id: $id){
     name
-    user
+    user{
+        firstName
+    }
     ingredients{
       edges{
         node{
@@ -61,9 +63,11 @@ query Pizza($id: ID!){
         }
       }
     }
-    usersWithSamePizza {
-      id
-      pizza
+     usersWithSamePizza{
+      user{
+        firstName
+      }
+      pizza 
     }
   }
 }
@@ -145,7 +149,8 @@ class CommonQueryTestCase(GraphQLTestCase):
     def test_pizza_user_1_query(self):
         # setup
         pizza_name = "Capriciosa"
-        pizza_user = "test_user_1"
+        pizza_user = User.objects.get(first_name="test_user_1")
+
         pizza = Pizza.objects.get(name=pizza_name, user=pizza_user)
         pizza_id = to_global_id("PizzaType", pizza.id)
 
@@ -158,7 +163,7 @@ class CommonQueryTestCase(GraphQLTestCase):
         result = content["data"]["pizza"]
 
         self.assertEqual(result["name"], pizza_name)
-        self.assertEqual(result["user"], pizza_user)
+        self.assertEqual(result["user"]["firstName"], pizza_user.first_name)
         self.assertEqual(
             result["ingredients"]["edges"][0]["node"]["name"], "Magic cheese"
         )
@@ -166,15 +171,15 @@ class CommonQueryTestCase(GraphQLTestCase):
             result["ingredients"]["edges"][1]["node"]["name"], "Magic mushrooms"
         )
         self.assertEqual(result["ingredients"]["edges"][2]["node"]["name"], "Magic ham")
-        self.assertEqual(result["usersWithSamePizza"][0]["id"], "test_user_2")
+        self.assertEqual(result["usersWithSamePizza"][0]["user"]["firstName"], "test_user_2")
         self.assertEqual(result["usersWithSamePizza"][0]["pizza"], "Ham and mushrooms")
-        self.assertEqual(result["usersWithSamePizza"][1]["id"], "test_user_6")
+        self.assertEqual(result["usersWithSamePizza"][1]["user"]["firstName"], "test_user_6")
         self.assertEqual(result["usersWithSamePizza"][1]["pizza"], "Capriciosa")
 
     def test_pizza_user_2_query(self):
         # setup
         pizza_name = "Ham and mushrooms"
-        pizza_user = "test_user_2"
+        pizza_user = User.objects.get(first_name="test_user_2")
         pizza = Pizza.objects.get(name=pizza_name, user=pizza_user)
         pizza_id = to_global_id("PizzaType", pizza.id)
 
@@ -187,7 +192,7 @@ class CommonQueryTestCase(GraphQLTestCase):
         result = content["data"]["pizza"]
 
         self.assertEqual(result["name"], pizza_name)
-        self.assertEqual(result["user"], pizza_user)
+        self.assertEqual(result["user"]["firstName"], pizza_user.first_name)
         self.assertEqual(
             result["ingredients"]["edges"][0]["node"]["name"], "Magic cheese"
         )
@@ -195,15 +200,15 @@ class CommonQueryTestCase(GraphQLTestCase):
             result["ingredients"]["edges"][1]["node"]["name"], "Magic mushrooms"
         )
         self.assertEqual(result["ingredients"]["edges"][2]["node"]["name"], "Magic ham")
-        self.assertEqual(result["usersWithSamePizza"][0]["id"], "test_user_1")
+        self.assertEqual(result["usersWithSamePizza"][0]["user"]["firstName"], "test_user_1")
         self.assertEqual(result["usersWithSamePizza"][0]["pizza"], "Capriciosa")
-        self.assertEqual(result["usersWithSamePizza"][1]["id"], "test_user_6")
+        self.assertEqual(result["usersWithSamePizza"][1]["user"]["firstName"], "test_user_6")
         self.assertEqual(result["usersWithSamePizza"][1]["pizza"], "Capriciosa")
 
     def test_pizza_user_3_query(self):
         # setup
         pizza_name = "Pepperoni"
-        pizza_user = "test_user_3"
+        pizza_user = User.objects.get(first_name="test_user_3")
         pizza = Pizza.objects.get(name=pizza_name, user=pizza_user)
         pizza_id = to_global_id("PizzaType", pizza.id)
 
@@ -216,7 +221,7 @@ class CommonQueryTestCase(GraphQLTestCase):
         result = content["data"]["pizza"]
 
         self.assertEqual(result["name"], pizza_name)
-        self.assertEqual(result["user"], pizza_user)
+        self.assertEqual(result["user"]["firstName"], pizza_user.first_name)
         self.assertEqual(
             result["ingredients"]["edges"][0]["node"]["name"], "Magic salami"
         )
@@ -226,7 +231,7 @@ class CommonQueryTestCase(GraphQLTestCase):
     def test_pizza_user_4_query(self):
         # setup
         pizza_name = "Cheese and salami"
-        pizza_user = "test_user_4"
+        pizza_user = User.objects.get(first_name="test_user_4")
         pizza = Pizza.objects.get(name=pizza_name, user=pizza_user)
         pizza_id = to_global_id("PizzaType", pizza.id)
 
@@ -239,20 +244,20 @@ class CommonQueryTestCase(GraphQLTestCase):
         result = content["data"]["pizza"]
 
         self.assertEqual(result["name"], pizza_name)
-        self.assertEqual(result["user"], pizza_user)
+        self.assertEqual(result["user"]["firstName"], pizza_user.first_name)
         self.assertEqual(
             result["ingredients"]["edges"][0]["node"]["name"], "Magic cheese"
         )
         self.assertEqual(
             result["ingredients"]["edges"][1]["node"]["name"], "Magic salami"
         )
-        self.assertEqual(result["usersWithSamePizza"][0]["id"], "test_user_5")
+        self.assertEqual(result["usersWithSamePizza"][0]["user"]["firstName"], "test_user_5")
         self.assertEqual(result["usersWithSamePizza"][0]["pizza"], "Salami with cheese")
 
     def test_pizza_user_5_query(self):
         # setup
         pizza_name = "Salami with cheese"
-        pizza_user = "test_user_5"
+        pizza_user = User.objects.get(first_name="test_user_5")
         pizza = Pizza.objects.get(name=pizza_name, user=pizza_user)
         pizza_id = to_global_id("PizzaType", pizza.id)
 
@@ -265,20 +270,20 @@ class CommonQueryTestCase(GraphQLTestCase):
         result = content["data"]["pizza"]
 
         self.assertEqual(result["name"], pizza_name)
-        self.assertEqual(result["user"], pizza_user)
+        self.assertEqual(result["user"]["firstName"], pizza_user.first_name)
         self.assertEqual(
             result["ingredients"]["edges"][0]["node"]["name"], "Magic cheese"
         )
         self.assertEqual(
             result["ingredients"]["edges"][1]["node"]["name"], "Magic salami"
         )
-        self.assertEqual(result["usersWithSamePizza"][0]["id"], "test_user_4")
+        self.assertEqual(result["usersWithSamePizza"][0]["user"]["firstName"], "test_user_4")
         self.assertEqual(result["usersWithSamePizza"][0]["pizza"], "Cheese and salami")
 
     def test_pizza_user_6_query(self):
         # setup
         pizza_name = "Capriciosa"
-        pizza_user = "test_user_6"
+        pizza_user = User.objects.get(first_name="test_user_6")
         pizza = Pizza.objects.get(name=pizza_name, user=pizza_user)
         pizza_id = to_global_id("PizzaType", pizza.id)
 
@@ -291,7 +296,7 @@ class CommonQueryTestCase(GraphQLTestCase):
         result = content["data"]["pizza"]
 
         self.assertEqual(result["name"], pizza_name)
-        self.assertEqual(result["user"], pizza_user)
+        self.assertEqual(result["user"]["firstName"], pizza_user.first_name)
         self.assertEqual(
             result["ingredients"]["edges"][0]["node"]["name"], "Magic cheese"
         )
@@ -299,7 +304,7 @@ class CommonQueryTestCase(GraphQLTestCase):
             result["ingredients"]["edges"][1]["node"]["name"], "Magic mushrooms"
         )
         self.assertEqual(result["ingredients"]["edges"][2]["node"]["name"], "Magic ham")
-        self.assertEqual(result["usersWithSamePizza"][0]["id"], "test_user_1")
+        self.assertEqual(result["usersWithSamePizza"][0]["user"]["firstName"], "test_user_1")
         self.assertEqual(result["usersWithSamePizza"][0]["pizza"], "Capriciosa")
-        self.assertEqual(result["usersWithSamePizza"][1]["id"], "test_user_2")
+        self.assertEqual(result["usersWithSamePizza"][1]["user"]["firstName"], "test_user_2")
         self.assertEqual(result["usersWithSamePizza"][1]["pizza"], "Ham and mushrooms")
