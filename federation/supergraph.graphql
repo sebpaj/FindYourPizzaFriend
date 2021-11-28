@@ -3,6 +3,7 @@ schema
   @core(feature: "https://specs.apollo.dev/join/v0.1", for: EXECUTION)
 {
   query: Query
+  mutation: Mutation
 }
 
 directive @core(as: String, feature: String!, for: core__Purpose) repeatable on SCHEMA
@@ -31,6 +32,8 @@ type CategoryTypeEdge {
   node: CategoryType
 }
 
+scalar DateTime
+
 type IngredientType implements Node {
   category: CategoryType!
   id: ID!
@@ -48,6 +51,22 @@ type IngredientTypeEdge {
   node: IngredientType
 }
 
+input LoginMutationInput {
+  clientMutationId: String
+  email: String!
+  firstName: String!
+  imageUrl: String!
+}
+
+type LoginMutationPayload {
+  clientMutationId: String
+  success: Boolean!
+}
+
+type Mutation {
+  login(input: LoginMutationInput!): LoginMutationPayload @join__field(graph: PIZZA)
+}
+
 interface Node {
   id: ID!
 }
@@ -63,7 +82,7 @@ type PizzaType implements Node {
   id: ID!
   ingredients(after: String, before: String, first: Int, last: Int, offset: Int): IngredientTypeConnection!
   name: String!
-  user: String!
+  user: UserType!
   usersWithSamePizza: [UserWithSamePizzaType]
 }
 
@@ -80,12 +99,38 @@ type PizzaTypeEdge {
 type Query {
   allCategories(after: String, before: String, first: Int, last: Int, offset: Int): CategoryTypeConnection @join__field(graph: PIZZA)
   allPizzas(after: String, before: String, first: Int, last: Int, offset: Int): PizzaTypeConnection @join__field(graph: PIZZA)
+  category(id: ID!): CategoryType @join__field(graph: PIZZA)
   pizza(id: ID!): PizzaType @join__field(graph: PIZZA)
+  users(after: String, before: String, email: String, email_Icontains: String, email_Istartswith: String, first: Int, last: Int, offset: Int): UserTypeConnection @join__field(graph: PIZZA)
+}
+
+type UserType implements Node {
+  admin: Boolean!
+  dateJoined: DateTime!
+  email: String!
+  firstName: String!
+  id: ID!
+  imageUrl: String!
+  isActive: Boolean!
+  lastLogin: DateTime
+  lastName: String!
+  pizzas(after: String, before: String, first: Int, last: Int, offset: Int): PizzaTypeConnection!
+  staff: Boolean!
+}
+
+type UserTypeConnection {
+  edges: [UserTypeEdge]!
+  pageInfo: PageInfo!
+}
+
+type UserTypeEdge {
+  cursor: String!
+  node: UserType
 }
 
 type UserWithSamePizzaType {
-  id: String!
   pizza: String!
+  user: UserType!
 }
 
 enum core__Purpose {
