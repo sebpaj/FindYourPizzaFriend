@@ -1,11 +1,12 @@
 const { ApolloServer } = require('apollo-server');
 const { ApolloGateway } = require('@apollo/gateway');
-const { readFileSync } = require('fs');
 
-const supergraphSdl = readFileSync('./supergraph.graphql').toString();
+require('dotenv').config();
 
 const gateway = new ApolloGateway({
-  supergraphSdl
+  serviceList: [
+    { name: 'pizza', url: process.env.PIZZA_URL ? process.env.PIZZA_URL : 'http://localhost:8000' },
+  ],
 });
 
 const server = new ApolloServer({
@@ -14,4 +15,5 @@ const server = new ApolloServer({
 
 server.listen().then(({ url }) => {
   console.log(`🚀 Gateway ready at ${url}`);
-}).catch(err => {console.error(err)});
+}).catch(err => { console.error(err) });
+

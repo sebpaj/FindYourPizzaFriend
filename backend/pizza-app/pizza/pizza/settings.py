@@ -23,8 +23,7 @@ SECRET_KEY = "django-insecure-3^@g1g&sbip(^og@$l2c2u*8mk)spk6b(d@o%89*zujss9714-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ["localhost"])
 
 # Application definition
 
@@ -137,4 +136,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 GRAPHENE = {"SCHEMA": "graphql_api.api.schema"}
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"

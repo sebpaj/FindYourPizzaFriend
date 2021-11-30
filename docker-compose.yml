@@ -3,20 +3,55 @@ version: "3.9"
 services:
   db:
     image: postgres
+    container_name: postgres
     volumes:
       - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
     environment:
-      - "POSTGRES_DB:${POSTGRES_DB}"
-      - "POSTGRES_USER:${POSTGRES_USER}"
-      - "POSTGRES_PASSWORD:${POSTGRES_PASSWORD}"
-  web:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  pizza:
+    container_name: pizza
     build: ./backend/pizza-app
-    command: >
-      sh -c "python pizza/manage.py migrate &&
-             python pizza/manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python pizza/manage.py migrate &&
+      python pizza/manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend/pizza-app:/app
     ports:
       - "8000:8000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-g",
+          "-X",
+          "POST",
+          "-H",
+          "Content-Type: application/json",
+          "-d",
+          '{"query":"query { __typename }"}',
+          "http://pizza:8000",
+        ]
+      interval: 30s
+      timeout: 3s
+    environment:
+      - ALLOWED_HOSTS=["*"]
     depends_on:
       - db
+
+  federation:
+    container_name: federation
+    build: ./federation
+    ports:
+      - 4000:4000
+    environment:
+      - PIZZA_URL=http://pizza:8000
+    depends_on:
+      pizza:
+        condition: service_healthy
