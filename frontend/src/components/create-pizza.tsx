@@ -6,16 +6,57 @@ import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import { useQuery, gql } from "@apollo/client";
+
+const CATEGORIES_WITH_INGREDIENTS_QUERY = gql`
+  query ALL_CATEGORIES {
+    allCategories {
+      edges {
+        node {
+          name
+          ingredients {
+            edges {
+              node {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const useStyles = makeStyles({
   root: {
     padding: "25px 5px",
   },
 });
 
+interface CategoryWithIngredients {
+  name: string;
+  ingredients: string[];
+}
+
 export default function CreatePizza(): JSX.Element {
   const [isPizzaModalOpen, setIsPizzaModalOpen] = useState<boolean>(false);
   const handleIsPizzaModelOpen = () => setIsPizzaModalOpen(!isPizzaModalOpen);
   const classes = useStyles();
+  const { data, loading, error } = useQuery(CATEGORIES_WITH_INGREDIENTS_QUERY);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <pre>{error.message}</pre>;
+
+  const categories: CategoryWithIngredients[] = data.allCategories.edges.map(
+    (edge: any) => ({
+      name: edge.node.name,
+      ingredients: edge.node.ingredients.edges.map(
+        (edge: any) => edge.node.name
+      ),
+    })
+  );
+
+  // TODO Pass categories as props to create-pizza-table and use pizza-cateogry table later for every category
 
   return (
     <React.Fragment>
